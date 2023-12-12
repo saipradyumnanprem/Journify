@@ -1,0 +1,158 @@
+{% extends "Home/base.html" %}
+
+{% block content %}
+<div
+    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom border-4 backgro">
+    <h1 class="h2 fst-italic">Insights</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <div class="dropdown-center mx-5 fs-4 row">
+            <div class="col">
+                <span class="fs-6 fst-italic">{{ user.get_username }}</span>
+            </div>
+            <button class="btn btn-light col" onclick="window.location.href=`{% url 'logout' %}`;"><span class=""
+                    style="font-size: 1rem;">Logout</span>
+            </button>
+        </div>
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-7">
+
+        <div class="row card p-2">
+            <div class="card-title fst-italic">How are you feeling today?</div>
+            <div class="row card-body text-center">
+
+                <div class="col mt-1">Make your entry here.. </div>
+                <div class="col">
+                    <button class="btn two-style" onclick="window.location.href=`{% url 'journalentry' %}`;">Take
+                        me
+                        there</button>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div style="display: none" id="jsonData" data-json="{{ data }}"></div>
+
+            <!-- <div class="col-sm-7 card but-style p-2">
+            <canvas id="lineChart" width="200" height="100"></canvas>
+        </div> -->
+
+            <div class="card but-style p-2 mt-4 text-center">
+                <canvas id="pieChart" width="400" height="200"></canvas>
+                <div class="mt-2">
+                    <p>Mood Trends</p>
+                </div>
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+    <div class="col-sm-4">
+
+
+        <div class="card but-style p-2 mx-5">
+            <div class="card-title fst-italic">You seem to be in a {{ user.usermoods.recent_mood }} Mood.</div>
+            <div class="card-subtitle">Here's what you can do</div>
+            <div class="row card-body">
+
+                <!-- <ul>
+                    <li>Engage in mindfulness or relaxation exercises to stay present and focused.</li>
+                    <li>Try something new and add excitement to daily life, provide a sense of accomplishment. </li>
+                    <li>Reach out to friends, family, or colleagues for a casual conversation or to plan a social
+                        activity.
+                    </li>
+                </ul> -->
+
+                {% for i in mood %}
+                <li>{{ i }}</li>
+                {% endfor %}
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<!-- 
+<div class="col-sm-3 card but-style p-2 mx-5">
+    <div class="card-title fst-italic">{{ mood.title }}</div>
+    <div class="row card-body text-center">
+
+        <p>{{ mood.content }}</p>
+
+    </div>
+
+</div> -->
+
+</div>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+</script>
+
+<script>
+
+    function loadJson(selector) {
+        return JSON.parse(document.querySelector(selector).getAttribute('data-json'));
+    }
+
+    var data = loadJson('#jsonData');
+
+    // var barChartData = {
+    //     labels: data.map(item => item.date),
+    //     datasets: [{
+    //         label: 'Mood Trend',
+    //         backgroundColor: 'rgb(75, 192, 192)',
+    //         data: data.map(item => item.mood[0]),
+    //     }]
+    // };
+
+    // var ctx = document.getElementById('lineChart').getContext('2d');
+    // new Chart(ctx, {
+    //     type: 'bar',
+    //     data: barChartData,
+    //     options: {
+    //         scales: {
+    //             y: {
+    //                 beginAtZero: true,
+    //             }
+    //         }
+    //     }
+    // });
+
+    // Pie Chart
+    var moodCounts = {};
+    data.forEach(item => {
+        item.mood.forEach(mood => {
+            moodCounts[mood] = (moodCounts[mood] || 0) + 1;
+        });
+    });
+
+    var pieChartData = {
+        labels: Object.keys(moodCounts),
+        datasets: [{
+            data: Object.values(moodCounts),
+            backgroundColor: ['red', 'green', 'blue', 'yellow', 'purple', 'orange']
+        }]
+    };
+
+    var pieChartContext = document.getElementById('pieChart').getContext('2d');
+    new Chart(pieChartContext, {
+        type: 'pie',
+        data: pieChartData,
+    });
+
+</script>
+
+
+
+{% endblock content %}

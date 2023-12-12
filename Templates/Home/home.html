@@ -1,0 +1,394 @@
+{% load static %}
+<html lang="en" data-bs-theme="">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Journify</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Abyssinica+SIL&family=Poppins:wght@400;500;600&family=Zeyada&display=swap');
+
+        .font-title {
+            font-family: 'Zeyada', cursive;
+        }
+
+        .example-divider {
+            width: 100%;
+            height: 3rem;
+            background-color: rgba(0, 0, 0, .1);
+            border: solid rgba(0, 0, 0, .15);
+            border-width: 1px 0;
+            box-shadow: inset 0 0.5em 1.5em rgba(0, 0, 0, .1), inset 0 0.125em 0.5em rgba(0, 0, 0, .15);
+        }
+
+        .accordion-item {
+            border: 1px solid black;
+            border-radius: 5px;
+            margin-bottom: 5px;
+            padding: 1rem;
+            border-radius: 0.5rem;
+        }
+
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+
+        .marketing .col-lg-4 {
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .main-div {
+            background-color: var(--bs-success-bg-subtle);
+        }
+
+        .but-style {
+            background-color: var(--bs-info-bg-subtle);
+        }
+    </style>
+</head>
+
+<body style="background-color: #e5ffff;">
+
+    <div class="container">
+        <header
+            class="container d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3">
+            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-decoration-none font-title">
+                <span class="text-dark fw-bold fs-4">journify</span>
+            </a>
+
+            <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+                <li><a href="#" class="nav-link px-2 link-secondary">Home</a></li>
+                <li><a href="#about" class="nav-link px-2 link-dark">About</a></li>
+                <li><a href="#features" class="nav-link px-2 link-dark">Features</a></li>
+                <li><a href="#testimonials" class="nav-link px-2 link-dark">Testimonials</a></li>
+                <li><a href="#faq" class="nav-link px-2 link-dark">FAQs</a></li>
+            </ul>
+
+            <div class="col-md-2">
+                {% if user.is_authenticated %}
+                <button type="button" class="btn btn-outline-primary me-2"
+                    onclick="window.location.href=`{% url 'logout' %}`;">
+                    Logout
+                </button>
+                {% else %}
+                <button type="button" class="btn btn-outline-info me-2"
+                    onclick="window.location.href=`{% url 'login_page' %}`;">Login</button>
+                <button type="button" class="btn btn-info"
+                    onclick="window.location.href=`{% url 'signup_page' %}`;">Sign-up</button>
+                {% endif%}
+            </div>
+        </header>
+    </div>
+
+    <section class="container text-dark" id="home">
+
+        <div class="main-div rounded-3 pt-5 pb-5 mt-4 mb-4">
+
+            <div class="text-center">
+
+                <img src="{% static '/img/main.png' %}" height="200" width="200">
+
+                <h1 style="font-size: 5rem;" class="display-2 fw-semibold font-title"><span
+                        style="color: black;">journify</span></h1>
+
+                <h5 class="mt-4 fst-italic">Your Personal Journey, one page at a time</h5>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <div class="example-divider"></div>
+
+    <section class="container col-xxl-8 px-4 py-5" id="about">
+        <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+            <div class="col-10 col-sm-8 col-lg-6">
+                <img src="{% static '/img/image1.png' %}" class="d-block mx-lg-auto img-fluid" width="300" height="300"
+                    loading="lazy">
+            </div>
+            <div class="col-lg-6">
+                <h4 class="display-5 fw-semibold text-body-emphasis lh-1 mb-3">About Us</h4>
+                <p class="lead">Welcome to Journify – the heartfelt space where words become memories, emotions find a
+                    voice, and dreams are penned into existence. We believe in the power of storytelling. Every life is
+                    a collection of stories, and we are here to help you chronicle your journey, one entry at a time.
+                    Our platform is not just about recording events; it's about capturing the essence of your
+                    experiences, the nuances of your emotions, and the dreams that shape your tomorrow.</p>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-start mt-4">
+                    <a href="{% url 'user_profile' %}" type="button" class="btn but-style btn-lg px-4 me-md-2">Get
+                        there</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="example-divider"></div>
+
+    <section class="container mt-4 mb-4 pb-4 pt-4" id="features">
+        <div class="text-center">
+            <h4 class="display-5 fw-semibold text-body-emphasis">Features</h4>
+        </div>
+        <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+            <div class="feature col">
+                <div
+                    class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-info bg-gradient fs-2 mb-3">
+                    <img src="{% static '/img/mobile.png' %}" class="bd-placeholder-img rounded-circle" width="65"
+                        height="65" alt="">
+
+                </div>
+                <h5 class="fs-4">Anytime, Anywhere</h5>
+                <p>Say goodbye to the constraints of physical devices – your memories and reflections are now seamlessly
+                    integrated into the cloud, ready to accompany you on every step of your journey. With Journify, you
+                    have the freedom to make entries from anywhere at any time.</p>
+                <a href="#" class="icon-link but-style">
+                    Call to action
+                    <svg class="bi">
+                        <use xlink:href="#chevron-right" />
+                    </svg>
+                </a>
+            </div>
+            <div class="feature col">
+                <div
+                    class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-info bg-gradient fs-2 mb-3">
+                    <img src="{% static '/img/prediction.png' %}" class="bd-placeholder-img rounded-circle" width="65"
+                        height="65" alt="">
+
+                </div>
+                <h5 class="fs-4">Mood Detection and Insights</h5>
+                <p>Journify goes beyond the written word; it listens to your emotions. Our innovative mood detection
+                    feature deciphers the sentiments behind your entries, providing you with valuable insights into your
+                    emotional landscape over time. Gain a deeper understanding of
+                    yourself through the lens of your evolving moods.</p>
+                <a href="#" class="icon-link but-style">
+                    Call to action
+                    <svg class="bi">
+                        <use xlink:href="#chevron-right" />
+                    </svg>
+                </a>
+            </div>
+            <div class="feature col">
+                <div
+                    class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-info bg-gradient fs-2 mb-3">
+                    <img src="{% static '/img/community.png' %}" class="bd-placeholder-img rounded-circle" width="65"
+                        height="65" alt="">
+                </div>
+                <h5 class="fs-4">Share Your Journals</h5>
+                <p>Journify empowers you to share your journey with the world, or keep it intimately private – the
+                    choice is yours. With a simple toggle, make your journals public, allowing others to glimpse into
+                    your experiences, find common ground, and connect over shared stories. </p>
+                <a href="#" class="icon-link but-style">
+                    Call to action
+                    <svg class="bi">
+                        <use xlink:href="#chevron-right" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <div class="example-divider"></div>
+
+    <section class="container marketing mt-4 mb-2" id="testimonials">
+
+        <div class="text-center">
+            <h4 class="display-5 fw-semibold text-body-emphasis">Testimonials</h4>
+        </div>
+
+        <div class="row pt-5 pb-3">
+            <div class="col-lg-4">
+                <img src="{% static '/img/test_1.jpeg' %}" class="bd-placeholder-img rounded-circle" width="140"
+                    height="140" alt="">
+                <h4 class="fw-semibold mt-3 mb-3 fst-italic">Michael, 42</h4>
+                <p class="fst-italic">Journify has been a game-changer for me. The cloud storage feature ensures I never
+                    miss capturing a moment, and the ability to make entries anytime, anywhere fits seamlessly into my
+                    on-the-go lifestyle. The mood detection adds a whole new dimension to my journaling, helping me
+                    track my emotional journey. Highly recommend!</p>
+            </div>
+            <div class="col-lg-4">
+                <img src="{% static '/img/test_2.jpg' %}" class="bd-placeholder-img rounded-circle" width="140"
+                    height="140" alt="">
+                <h4 class="fw-semibold mt-3 mb-3 fst-italic">Jimothy, 32</h4>
+                <p class="fst-italic">As a frequent traveler, Journify has become my trusted companion. I can document
+                    my experiences, insights, and moods from any corner of the globe. The cloud storage feature gives me
+                    peace of mind, and the option to share my journals allows me to connect with a like-minded
+                    community. Journify has truly enriched my storytelling experience.</p>
+            </div>
+            <div class="col-lg-4">
+                <img src="{% static '/img/test_3.jpg' %}" class="bd-placeholder-img rounded-circle" width="140"
+                    height="140" alt="">
+                <h4 class="fw-semibold mt-3 mb-3 fst-italic">Pamela, 29</h4>
+                <p class="fst-italic">Journify has turned my journaling practice into a daily ritual. The cloud storage
+                    ensures my memories are safe, and the intuitive interface makes it a breeze to create entries. The
+                    mood detection feature is a game-changer, providing me with valuable insights into my emotional
+                    well-being. It's more than a journal; it's a journey companion.
+                </p>
+            </div>
+        </div>
+
+    </section>
+
+    <div class="example-divider"></div>
+
+    <section class="container mt-3 mt-3 pb-4" id="faq">
+
+        <div class="text-center mt-4 mb-5">
+            <h4 class="display-5 fw-semibold text-body-emphasis">Frequently Asked Questions</h4>
+        </div>
+
+        <div class="accordion-container mt-4 pb-4" id="accordionExample">
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                        How does cloud storage work in Journify?
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse backgro" aria-labelledby="headingOne"
+                    data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        Journify utilizes secure cloud storage to store your journal entries. This means your data is
+                        stored on remote servers, ensuring accessibility from any device. It's a seamless and safe way
+                        to safeguard your memories.
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Can I make journal entries offline?
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                    data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        Absolutely! Journify understands that inspiration can strike anywhere. You can make journal
+                        entries offline, and once you're back online, your entries will sync with the cloud, ensuring no
+                        moment is left unrecorded.
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        How does mood detection work, and what insights does it provide?
+                    </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                    data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        Mood detection in Journify analyzes the sentiments expressed in your entries. Over time, it
+                        provides you with insights into your emotional patterns and trends. This feature allows for a
+                        deeper understanding of your well-being and personal growth.
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                        Is my journal private, and can I share it with others?
+                    </button>
+                </h2>
+                <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        Your privacy is a priority. You have the option to keep your journal entries private or make
+                        them public. Choose to share your journey with the world or keep it intimate – Journify gives
+                        you full control over your sharing preferences.
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                        Can I access my journals from multiple devices?
+                    </button>
+                </h2>
+                <div id="collapseFive" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        Absolutely! Journify is designed to be accessible from various devices. Whether you're using a
+                        smartphone, tablet, or computer, your journals will be synchronized across all platforms for a
+                        seamless and consistent experience.
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                        How do I share my journals with others?
+                    </button>
+                </h2>
+                <div id="collapseSix" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        Sharing your journals is easy. Simply toggle the public/private setting for individual entries
+                        or your entire journal. Public entries can be shared via a unique link, allowing others to
+                        explore and connect with your personal stories.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <style>
+            .backgro {
+                background-color: #e5ffff;
+            }
+        </style>
+
+    </section>
+
+
+
+
+    <div class="example-divider"></div>
+
+    <section class="container">
+        <footer class="py-3 my-4">
+            <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Home</a></li>
+                <li class="nav-item"><a href="#about" class="nav-link px-2 text-body-secondary">About</a></li>
+                <li class="nav-item"><a href="#features" class="nav-link px-2 text-body-secondary">Features</a></li>
+                <li class="nav-item"><a href="#testimonials" class="nav-link px-2 text-body-secondary">Testimonials</a>
+                </li>
+                <li class="nav-item"><a href="#faq" class="nav-link px-2 text-body-secondary">FAQs</a></li>
+            </ul>
+            <p class="text-center text-body-secondary"><span class="font-title fw-bold fs-4">journify</span> &copy; 2023
+            </p>
+        </footer>
+    </section>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"
+        integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js"
+        integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

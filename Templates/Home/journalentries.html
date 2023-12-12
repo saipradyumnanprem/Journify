@@ -1,0 +1,40 @@
+{% extends "Home/base.html" %}
+
+{% block content %}
+
+<div
+    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom border-4 backgro">
+    <h1 class="h2">Journal Entries</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <div class="dropdown-center mx-5 fs-4 row">
+            <div class="col">
+                <span class="fs-6 fst-italic">{{ user.get_username }}</span>
+            </div>
+            <button class="btn btn-light col" onclick="window.location.href=`{% url 'logout' %}`;"><span class=""
+                    style="font-size: 1rem;">Logout</span>
+            </button>
+        </div>
+
+    </div>
+</div>
+
+<div>
+
+    {% for i in data %}
+
+
+    <div class="card mb-4" style="width: 75%;">
+        <div class="card-body">
+            <h5 class="card-title">{{ i.journal_title }}</h5>
+            <h6 class="card-subtitle mb-2 text-body-secondary">{{ i.date }}</h6>
+            <p class="card-text">{{ i.content }}</p>
+            <p>Feeling <span class="fst-italic fw-bold">{{ i.mood.0 }}, {{ i.mood.1 }}</span></p>
+
+        </div>
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}
