@@ -36,11 +36,8 @@
         </div>
 
         <div class="row">
+            {% if data %}
             <div style="display: none" id="jsonData" data-json="{{ data }}"></div>
-
-            <!-- <div class="col-sm-7 card but-style p-2">
-            <canvas id="lineChart" width="200" height="100"></canvas>
-        </div> -->
 
             <div class="card but-style p-2 mt-4 text-center">
                 <canvas id="pieChart" width="400" height="200"></canvas>
@@ -48,6 +45,11 @@
                     <p>Mood Trends</p>
                 </div>
             </div>
+            {% else %}
+            <div>
+                <p>Make a Journal entry to get insights now!</p>
+            </div>
+            {% endif %}
 
         </div>
 
@@ -59,22 +61,19 @@
 
 
         <div class="card but-style p-2 mx-5">
-            <div class="card-title fst-italic">You seem to be in a {{ user.usermoods.recent_mood }} Mood.</div>
+            <!-- <div class="card-title fst-italic">You seem to be in a {{ user.usermoods.recent_mood }} Mood.</div> -->
             <div class="card-subtitle">Here's what you can do</div>
+            {% if mood %}
             <div class="row card-body">
-
-                <!-- <ul>
-                    <li>Engage in mindfulness or relaxation exercises to stay present and focused.</li>
-                    <li>Try something new and add excitement to daily life, provide a sense of accomplishment. </li>
-                    <li>Reach out to friends, family, or colleagues for a casual conversation or to plan a social
-                        activity.
-                    </li>
-                </ul> -->
-
                 {% for i in mood %}
                 <li>{{ i }}</li>
                 {% endfor %}
             </div>
+            {% else %}
+            <div class="mt-2">
+                <p>Make a Journal Entry to get suggestions!</p>
+            </div>
+            {% endif %}
 
         </div>
 

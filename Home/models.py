@@ -40,6 +40,8 @@ class UserProfile(models.Model):
 class UserMoods(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     recent_mood = models.CharField(max_length=256, blank=True)
+    secondary_mood = models.CharField(max_length=256, blank=True)
+    image_mood = models.CharField(max_length=256, blank=True)
 
     def create_profile(sender, **kwargs):
         if kwargs['created']:
@@ -49,3 +51,26 @@ class UserMoods(models.Model):
 
     class Meta:
         db_table = 'usermoods'
+
+
+class JournalCounter(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
+    journal_entry_count = models.IntegerField(default=0)
+
+    def __int__(self):
+        return self.journal_entry_count
+
+
+class ImageEntry(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    username = models.CharField(max_length=256, blank=True)
+    image = models.ImageField(upload_to='uploads/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+    journal_counter = models.IntegerField()
+
+    def __str__(self):
+        return f'{self.image}'
+
+    class Meta:
+        verbose_name = 'Image Entry'
+        verbose_name_plural = 'Image Entries'

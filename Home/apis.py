@@ -2,9 +2,9 @@ import nltk
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 import random
 
-nltk.download('punkt')
-nltk.download('averaged_perceptron_tagger')
-nltk.download('vader_lexicon')
+# nltk.download('punkt')
+# nltk.download('averaged_perceptron_tagger')
+# nltk.download('vader_lexicon')
 
 sia = SentimentIntensityAnalyzer()
 
@@ -101,118 +101,104 @@ def classify(text):
 
 emotions = {
     "feared": [
-        [
-            "Take deep breaths to calm your nervous system.",
-            "Identify and challenge irrational thoughts causing fear.",
-            "Gradually expose yourself to what you fear to build resilience."
-        ],
-        [
-            "Practice mindfulness techniques during anxious moments.",
-            "Seek professional support to address deep-seated fears.",
-            "Create a 'fear hierarchy' to tackle fears step by step."
-        ],
-        [
-            "Visualize a calming place to reduce anxiety.",
-            "Keep a fear journal to track triggers and reactions.",
-            "Build a support network to share fears and seek encouragement."
-        ]
+        "Take deep breaths to calm your nervous system.",
+        "Identify and challenge irrational thoughts causing fear.",
+        "Gradually expose yourself to what you fear to build resilience.",
+        "Practice mindfulness techniques during anxious moments.",
+        "Seek professional support to address deep-seated fears.",
+        "Create a 'fear hierarchy' to tackle fears step by step.",
+        "Visualize a calming place to reduce anxiety.",
+        "Keep a fear journal to track triggers and reactions.",
+        "Build a support network to share fears and seek encouragement."
     ],
 
     "neutral": [
-        [
-            "Practice mindfulness to stay in the present moment.",
-            "Engage in activities that bring a sense of balance.",
-            "Explore new hobbies to add variety to your routine."
-        ],
-        [
-            "Take a break from screens and enjoy nature.",
-            "Schedule 'me time' to recharge and relax.",
-            "Reflect on the positives in your life to maintain a neutral mood."
-        ],
-        [
-            "Maintain a consistent sleep schedule for emotional stability.",
-            "Practice gratitude to appreciate the ordinary moments.",
-            "Connect with others without the expectation of strong emotions."
-        ]
+
+        "Practice mindfulness to stay in the present moment.",
+        "Engage in activities that bring a sense of balance.",
+        "Explore new hobbies to add variety to your routine.",
+        "Take a break from screens and enjoy nature.",
+        "Schedule 'me time' to recharge and relax.",
+        "Reflect on the positives in your life to maintain a neutral mood.",
+        "Maintain a consistent sleep schedule for emotional stability.",
+        "Practice gratitude to appreciate the ordinary moments.",
+        "Connect with others without the expectation of strong emotions."
+
     ],
 
     "happy": [
-        [
-            "Express gratitude for positive aspects of your life.",
-            "Engage in activities that bring you joy and fulfillment.",
-            "Connect with loved ones and share happy moments."
-        ],
-        [
-            "Set achievable goals to experience a sense of accomplishment.",
-            "Surround yourself with positive influences.",
-            "Celebrate small victories to boost overall happiness."
-        ],
-        [
-            "Practice acts of kindness to enhance your mood.",
-            "Savor enjoyable moments and create positive memories.",
-            "Engage in laughter and find humor in daily life."
-        ]
+        "Express gratitude for positive aspects of your life.",
+        "Engage in activities that bring you joy and fulfillment.",
+        "Connect with loved ones and share happy moments.",
+        "Set achievable goals to experience a sense of accomplishment.",
+        "Surround yourself with positive influences.",
+        "Celebrate small victories to boost overall happiness.",
+        "Practice acts of kindness to enhance your mood.",
+        "Savor enjoyable moments and create positive memories.",
+        "Engage in laughter and find humor in daily life."
     ],
 
     "sad": [
-        [
-            "Allow yourself to feel and acknowledge your emotions.",
-            "Reach out to friends or a support system for comfort.",
-            "Engage in activities that provide comfort and solace."
-        ],
-        [
-            "Express your feelings through creative outlets like art or writing.",
-            "Create a self-care routine to prioritize your emotional well-being.",
-            "Set realistic expectations for yourself during challenging times."
-        ],
-        [
-            "Attend social events to maintain connections even when feeling down.",
-            "Seek professional help if sadness persists or intensifies.",
-            "Practice self-compassion and avoid self-criticism during low moments."
-        ]
+        "Allow yourself to feel and acknowledge your emotions.",
+        "Reach out to friends or a support system for comfort.",
+        "Engage in activities that provide comfort and solace.",
+        "Express your feelings through creative outlets like art or writing.",
+        "Create a self-care routine to prioritize your emotional well-being.",
+        "Set realistic expectations for yourself during challenging times.",
+        "Attend social events to maintain connections even when feeling down.",
+        "Seek professional help if sadness persists or intensifies.",
+        "Practice self-compassion and avoid self-criticism during low moments.",
     ],
 
     "angry": [
-        [
-            "Practice deep breathing or meditation to manage anger.",
-            "Communicate assertively rather than aggressively.",
-            "Take a break and engage in physical activity to release tension."
-        ],
-        [
-            "Use 'I' statements to express your feelings without blame.",
-            "Implement time-outs to cool off during heated moments.",
-            "Explore the root causes of anger to address underlying issues."
-        ],
-        [
-            "Channel anger into productive activities like exercise.",
-            "Develop healthy outlets for frustration, such as journaling.",
-            "Seek guidance from a therapist to explore and manage anger issues."
-        ]
+        "Practice deep breathing or meditation to manage anger.",
+        "Communicate assertively rather than aggressively.",
+        "Take a break and engage in physical activity to release tension.",
+        "Use 'I' statements to express your feelings without blame.",
+        "Implement time-outs to cool off during heated moments.",
+        "Explore the root causes of anger to address underlying issues.",
+        "Channel anger into productive activities like exercise.",
+        "Develop healthy outlets for frustration, such as journaling.",
+        "Seek guidance from a therapist to explore and manage anger issues."
     ],
 
     "surprised": [
-        [
-            "Embrace the unexpected with an open mind.",
-            "Find humor in surprises to lighten the mood.",
-            "Reflect on the positive aspects of surprises in your life."
-        ],
-        [
-            "Cultivate a sense of curiosity and openness to new experiences.",
-            "Share surprise moments with others to enhance connections.",
-            "Celebrate the spontaneity of life and its unpredictable nature."
-        ],
-        [
-            "Adapt to unexpected changes with flexibility and resilience.",
-            "Learn from surprises and view them as opportunities for growth.",
-            "Find joy in the unpredictability of life's twists and turns."
-        ]
+        "Embrace the unexpected with an open mind.",
+        "Find humor in surprises to lighten the mood.",
+        "Reflect on the positive aspects of surprises in your life.",
+        "Cultivate a sense of curiosity and openness to new experiences.",
+        "Share surprise moments with others to enhance connections.",
+        "Celebrate the spontaneity of life and its unpredictable nature.",
+        "Adapt to unexpected changes with flexibility and resilience.",
+        "Learn from surprises and view them as opportunities for growth.",
+        "Find joy in the unpredictability of life's twists and turns."
     ]
 }
 
 
-def ret_tips(emotion):
+def ret_tips(user):
 
-    if emotion.lower() in emotions:
-        return random.choice(emotions[emotion.lower()])
+    mood = user.usermoods.recent_mood
+    mood2 = user.usermoods.secondary_mood
+    image_mood = user.usermoods.image_mood
+
+    if mood.lower() not in emotions:
+        return []
+
+    solutionList = []
+
+    solutionList.append(random.choice(emotions[mood.lower()]))
+    solutionList.append(random.choice(emotions[mood2.lower()]))
+    if image_mood:
+        solutionList.append(random.choice(emotions[image_mood.lower()]))
     else:
-        return "Emotion not found."
+        trial = random.choice(emotions[mood.lower()])
+        while True:
+            if trial in solutionList:
+                trial = random.choice(emotions[mood.lower()])
+            else:
+                break
+
+        solutionList.append(trial)
+
+    return solutionList

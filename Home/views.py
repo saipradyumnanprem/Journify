@@ -1,3 +1,5 @@
+from . import apis, cloud
+from .models import ImageEntry, JournalCounter
 from django.http import HttpResponse
 from . import apis
 from . import cloud
@@ -8,7 +10,11 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 import json
-from .models import UserMoods
+from .models import UserMoods, ImageEntry, JournalCounter
+from .facialrecog import pred_emotion
+from PIL import Image
+import numpy as np
+from django.templatetags.static import static
 
 
 def home(request):
@@ -80,12 +86,14 @@ def details_page(request):
 
 def userprofile(request):
 
-    data = list(cloud.get_data(username=request.user.username))
+    data = list(cloud.get_data(
+        username=request.user.username, user=request.user))
 
-    mood = request.user.usermoods.recent_mood
-    print(mood)
+    # mood = request.user.usermoods.recent_mood
+    # mood2 = request.user.usermoods.secondary_mood
+    # image_mood = request.user.usermoods.image_mood
 
-    mo = apis.ret_tips(mood)
+    mo = apis.ret_tips(request.user)
 
     context = {
         "data": json.dumps(data),
@@ -96,21 +104,38 @@ def userprofile(request):
 
 
 def journal_entry(request):
-
     if request.method == 'POST':
+        journal_counter, created = JournalCounter.objects.get_or_create(
+            user=request.user)
 
         temp_dict = {}
-
+        temp_dict["journalId"] = journal_counter.journal_entry_count
         temp_dict["username"] = request.user.username
         temp_dict["journal_title"] = request.POST.get('journaltitle')
         temp_dict["content"] = request.POST.get('content')
         temp_dict["public"] = request.POST.get('public')
         temp_dict["mood"] = apis.classify(temp_dict["content"])
 
-        cloud.add_entry(temp_dict)
+        if 'image_input' in request.FILES:
+            img_file = request.FILES['image_input']
+            img = Image.open(img_file)
+            img_array = np.array(img)
+            temp_dict["imageMood"] = pred_emotion(img_array)
+            image_entry = ImageEntry(user=request.user, image=img_file)
+            image_entry.journal_counter = journal_counter
+            image_entry.username = request.user.username
+            image_entry.save()
+
+            UserMoods.objects.filter(user=request.user).update(
+                recent_mood=temp_dict["mood"][0], secondary_mood=temp_dict["mood"][1], image_mood=temp_dict["imageMood"])
 
         UserMoods.objects.filter(user=request.user).update(
-            recent_mood=temp_dict["mood"][0])
+                recent_mood=temp_dict["mood"][0], secondary_mood=temp_dict["mood"][1], image_mood=temp_dict["imageMood"])
+
+        cloud.add_entry(temp_dict)
+
+        journal_counter.journal_entry_count += 1
+        journal_counter.save()
 
         return redirect("user_profile")
 
@@ -119,9 +144,8 @@ def journal_entry(request):
 
 def get_journal_entries(request):
 
-    context = {'data': list(cloud.get_data(username=request.user.username))}
-
-    print(context)
+    context = {'data': list(cloud.get_data(
+        username=request.user.username, user=request.user))}
 
     return render(request, 'Home/journalentries.html', context)
 
@@ -129,8 +153,6 @@ def get_journal_entries(request):
 def get_public_journal_entries(request):
 
     context = {'data': list(cloud.get_public_data())}
-
-    print(context)
 
     return render(request, 'Home/publicblog.html', context)
 

@@ -3,9 +3,11 @@ from datetime import date
 import sys
 from ibmcloudant.cloudant_v1 import CloudantV1
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
+from .models import ImageEntry
+from django.contrib.auth.models import User
 
 
-def get_data(username):
+def get_data(username, user):
     authenticator = IAMAuthenticator(
         "EWxgC_Bv2XBMBTnKXmkMi5uz6BFm9zx-3a9BETDvxLSJ")
     service = CloudantV1(authenticator=authenticator)
@@ -18,6 +20,13 @@ def get_data(username):
                                  "$eq": username}}).get_result()
 
     user_data = response['docs']
+
+    for i in user_data:
+        imgPath = ImageEntry.objects.filter(
+            user=user, journal_counter=i["journalId"]).values('image')
+
+        # print(imgPath[0]["image"])
+        i["img_path"] = imgPath[0]["image"]
 
     return user_data
 
@@ -34,12 +43,14 @@ def add_entry(incoming_data):
     date_now = date.today().strftime("%Y-%m-%d")
 
     new_entry = {
+        "journalId": incoming_data["journalId"],
         "username": incoming_data["username"],
         "date": date_now,
         "journal_title": incoming_data["journal_title"],
         "public": incoming_data["public"],
         "content": incoming_data["content"],
-        "mood": incoming_data["mood"]
+        "mood": incoming_data["mood"],
+        "imageMood": incoming_data["imageMood"]
     }
 
     dict = {
@@ -48,8 +59,6 @@ def add_entry(incoming_data):
 
     response = service.post_document(
         db='journalentries', document=dict['entry'])
-
-    print("added")
 
 
 def get_public_data():
@@ -66,5 +75,14 @@ def get_public_data():
         db=DB_NAME, selector={"public": {"$eq": "true"}}).get_result()
 
     user_data = response['docs']
+
+    for i in user_data:
+
+        imgPath = ImageEntry.objects.filter(
+            username=i["username"], journal_counter=i["journalId"]).values()
+
+        print(imgPath)
+
+        i["img_path"] = imgPath[0]["image"]
 
     return user_data

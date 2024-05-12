@@ -31,9 +31,15 @@
                 </h6>
                 <h6 class="col text-end">{{ i.date }}</h6>
             </div>
+            <div class="text-center">
+                <img src="/{{ i.img_path }}" alt="" width="250px">
+                <!-- <p>The image suggests that you are: <span class="fst-italic fw-bold">{{ i.imageMood }}</span></p> -->
+            </div>
 
             <p class="card-text">{{ i.content }}</p>
             <p>Feeling <span class="fst-italic fw-bold">{{ i.mood.0 }}, {{ i.mood.1 }}</span></p>
+            <!-- <img src="/{{ i.img_path }}" alt="" width="250px"> -->
+            <!-- <p>The image suggests that you are: <span class="fst-italic fw-bold">{{ i.imageMood }}</span></p> -->
 
         </div>
     </div>
