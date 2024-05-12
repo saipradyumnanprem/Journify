@@ -86,6 +86,8 @@ def classify(text):
 
     clas_dict = dict(classified)
 
+    print(clas_dict)
+
     final = []
 
     flag = 0

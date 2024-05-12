@@ -128,11 +128,13 @@ def journal_entry(request):
 
             UserMoods.objects.filter(user=request.user).update(
                 recent_mood=temp_dict["mood"][0], secondary_mood=temp_dict["mood"][1], image_mood=temp_dict["imageMood"])
+            cloud.add_entry(temp_dict)
 
-        UserMoods.objects.filter(user=request.user).update(
-                recent_mood=temp_dict["mood"][0], secondary_mood=temp_dict["mood"][1], image_mood=temp_dict["imageMood"])
+        else:
+            UserMoods.objects.filter(user=request.user).update(
+                recent_mood=temp_dict["mood"][0], secondary_mood=temp_dict["mood"][1])
 
-        cloud.add_entry(temp_dict)
+            cloud.add_entry1(temp_dict)
 
         journal_counter.journal_entry_count += 1
         journal_counter.save()
